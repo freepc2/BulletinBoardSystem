@@ -1,0 +1,28 @@
+﻿@**@
+
+<h1>게시판 작성</h1>
+
+model IEnumerable<Note>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var note in Model)// Model은 리스트를 의미한다.
+        {
+            <tr>
+                <td>@note.No</td>
+                <td>
+                    <a asp-controller="Note" asp-action="Detail" asp-route-noteNo="@note.No">@note.Title</a>
+                </td>
+                <td>@note.UserNo</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-warning" asp-controller="Note" asp-action="Add">게시물 작성</a>
