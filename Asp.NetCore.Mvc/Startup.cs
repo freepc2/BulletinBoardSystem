@@ -33,7 +33,16 @@ namespace Asp.NetCore.Mvc
         public void ConfigureServices(IServiceCollection services)
         {
 
-            // 의존성 주입
+            /* 의존성 주입
+             * 1. .AddSingleton<T>();
+             *  - 프로그램 시작시에 생성되며, 프로그램 종료시까지 메모리 상에 유지되는 객체
+             * 2. .AddScoped<T>();
+             *  - 웹사이트가 시작되어 1번의 요청이 있을 때, 메모리 상에 유지되는 객체 
+             * 3. .AddTransient<T>(); <추천>
+             *  - 웹사이트가 시작되어 각 요청마다 새롭게 생성되는 객체 주입
+             *  - 필요시마다 생성되고 사용하지 않으면 삭제된다
+             *  - ligthweight, stateless services
+             */
 
             // 의존성 주입 UserBll
             services.AddTransient<UserBll>();
