@@ -31,10 +31,11 @@ namespace Asp.NetCore.Mvc6.Controllers
         {
             if(ModelState.IsValid)
             {
+                new PasswordHasher<string>().HashPassword(null, model.Password);
                 var user = new User
                 {
                     UserName = model.Id,
-                    PasswordHash = model.Password,
+                    PasswordHash = new PasswordHasher<string>().HashPassword(null, model.Password),
                     Email = model.Email
                 };
                 if (_userBll.AddUser(user))
@@ -50,8 +51,13 @@ namespace Asp.NetCore.Mvc6.Controllers
         {
             return View();
         }
-        public IActionResult Logout()
+        [HttpPost]
+        public IActionResult Logout(LoginViewModel model)
         {
+            if(ModelState.IsValid)
+            {
+                _userBll.GetUser()
+            }
             return View();
         }
         public IActionResult ChangePassword()
