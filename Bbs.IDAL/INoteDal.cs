@@ -9,6 +9,10 @@ namespace Bbs.IDAL
     {
         Note GetNote(int No);
         List<Note> GetNoteList();
-        bool SetNote(Note note);
+        bool PostNote(Note note);
+
+        bool UpdateNote(Note note);
+
+        bool DeleteNote(Note note);
     }
 }

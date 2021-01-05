@@ -8,7 +8,8 @@ namespace Bbs.IDAL
     {
         User GetUser(int No);
         List<User> GetUserList();
-        bool SetUser(User user);
-        User GetUser();
+        bool AddUser(User user);
+        bool UpdateUser(User user);
+        bool DeleteUser(User user);
     }
 }

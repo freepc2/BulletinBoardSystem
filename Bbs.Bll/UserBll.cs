@@ -24,7 +24,7 @@ namespace Bbs.Bll
             throw new NotImplementedException();
         }
 
-        public bool SetUser(User user)
+        public bool AddUser(User user)
         {
             throw new NotImplementedException();
         }

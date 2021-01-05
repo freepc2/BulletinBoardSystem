@@ -13,10 +13,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
+using Asp.NetCore.Mvc.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Asp.NetCore.Mvc
 {
@@ -45,57 +45,40 @@ namespace Asp.NetCore.Mvc
              */
 
             // 의존성 주입 UserBll
+
             services.AddTransient<UserBll>();
             services.AddTransient<IUserDal, UserDal>();
 
             services.AddTransient<NoteBll>();
             services.AddTransient<INoteDal, NoteDal>();
 
-            //services.AddDbContext<BbsDbContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DefaultConnection")));
+            // Add Singleton & DB context
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddDbContext<BbsDbContext>();
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<BbsDbContext>();
-
-            //  services.AddTransient<IEmailSender, EmailSender>();
-            //  services.Configure<AuthMessageSenderOptions>(Configuration);
-
-
             services.Configure<DataProtectionTokenProviderOptions>(o =>
-                o.TokenLifespan = TimeSpan.FromHours(1));
-
-
+                   o.TokenLifespan = TimeSpan.FromHours(1));
 
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Password settings.
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 1;
 
-                // Lockout settings.
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.AllowedForNewUsers = true;
+            services.AddIdentityCore<User>()
+                .AddRoles<UserRole>()
+                .AddEntityFrameworkStores<BbsDbContext>()
+                .AddSignInManager()
+                .AddDefaultTokenProviders();
 
-                // User settings.
-                options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = false;
-            });
-            //Password 해시 반복 횟수
-            services.Configure<PasswordHasherOptions>(option =>
+
+            services.AddAuthentication(o =>
             {
-                option.IterationCount = 12000;
+                o.DefaultScheme = IdentityConstants.ApplicationScheme;
+                o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
             });
-            
+            //.AddIdentityCookies(o =>
+            //{
+            //});
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -103,10 +86,17 @@ namespace Asp.NetCore.Mvc
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
-                options.LoginPath = "/Identity/Account/Login";
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+              //  options.LoginPath = "/Identity/Account/Login";
+              //  options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+
+            // Add application services.
+            //    services.AddTransient<IEmailSender, AuthMessageSender>();
+            //    services.AddTransient<ISmsSender, AuthMessageSender>();
+
+
+           // services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

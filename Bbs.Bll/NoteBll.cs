@@ -13,8 +13,15 @@ namespace Bbs.Bll
         {
             _noteDal = noteDal;
         }
+
+        public bool DeleteNote(Note note)
+        {
+            throw new NotImplementedException();
+        }
+
         public Note GetNote(int No)
         {
+            if (No <= 0) throw new ArgumentException();
             return _noteDal.GetNote(No);
         }
 
@@ -23,9 +30,15 @@ namespace Bbs.Bll
             return _noteDal.GetNoteList();
         }
 
-        public bool SetNote(Note note)
+        public bool PostNote(Note note)
         {
-            return _noteDal.SetNote(note);
+            if (note == null) throw new ArgumentException();
+            return _noteDal.PostNote(note);
+        }
+
+        public bool UpdateNote(Note note)
+        {
+            throw new NotImplementedException();
         }
     }
 }

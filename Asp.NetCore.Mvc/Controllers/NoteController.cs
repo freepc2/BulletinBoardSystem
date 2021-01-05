@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Asp.NetCore.Mvc.Controllers
 {
@@ -13,11 +15,14 @@ namespace Asp.NetCore.Mvc.Controllers
     public class NoteController : Controller
     {
         private readonly UserBll _userBll;
+        private readonly UserManager<User> _userManager;
         private readonly NoteBll _noteBll;
         public NoteController(
+            UserManager<User> userManager,
             UserBll userBll,
             NoteBll noteBll)
         {
+            _userManager = userManager;
             _userBll = userBll;
             _noteBll = noteBll;
         }
@@ -28,7 +33,9 @@ namespace Asp.NetCore.Mvc.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var model = _noteBll.GetNoteList();
+            var model = _noteBll.GetNoteList()
+                .OrderByDescending(n=>n.No)
+                .ToList();
 
             return View(model);
         }
@@ -41,6 +48,16 @@ namespace Asp.NetCore.Mvc.Controllers
         [HttpPost] // 해당 index에서 나갈때, 다른곳으로 이동시에 사용됨
         public IActionResult Add(Note model)
         {
+            //Get User.Id
+            model.UserNo = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            //Get User.Name
+            //var appUser = await _userManager.GetUserAsync(User);
+            
+            if (ModelState.IsValid)
+            {
+                _noteBll.PostNote(model);
+            }
             return View(model);
         }
     }

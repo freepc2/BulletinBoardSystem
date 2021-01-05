@@ -6,14 +6,25 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Bbs.MSSQL.DAL
 {
     public class NoteDal : INoteDal
     {
+        private readonly IConfiguration _configuration;
+        public NoteDal(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        public bool DeleteNote(Note note)
+        {
+            throw new NotImplementedException();
+        }
+
         public Note GetNote(int No)
         {
-            using (var db = new BbsDbContext())
+            using (var db = new BbsDbContext(_configuration))
             {
                 var note = db.Notes.FirstOrDefault(x => x.No.Equals(No));
                 return note;
@@ -22,22 +33,28 @@ namespace Bbs.MSSQL.DAL
 
         public List<Note> GetNoteList()
         {
-            using (var db = new BbsDbContext())
+            using (var db = new BbsDbContext(_configuration))
             {
                 // DB에서 연동하고 List 출력
-                var note = db.Notes.Include(x => x.User).ToList();                
-                return note;
+                return db.Notes.Include(x => x.User)
+                    .OrderByDescending(n=>n.No)
+                    .ToList();                
             }
         }
 
-        public bool SetNote(Note note)
+        public bool PostNote(Note note)
         {
-            using (var db = new BbsDbContext())
+            using (var db = new BbsDbContext(_configuration))
             {
                 db.Notes.Add(note);
 
                 return (db.SaveChanges() > 0) ? true : false;
             }
+        }
+
+        public bool UpdateNote(Note note)
+        {
+            throw new NotImplementedException();
         }
     }
 }

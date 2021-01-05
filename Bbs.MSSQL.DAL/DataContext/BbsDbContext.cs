@@ -10,12 +10,18 @@ namespace Bbs.MSSQL.DAL.DataContext
 {
     public class BbsDbContext : IdentityDbContext<User, UserRole, int>
     {
-        string LocalDb = @"Server=(localdb)\mssqllocaldb;Database=BbsDb;Trusted_Connection=True;MultipleActiveResultSets=true";
+        private readonly IConfiguration _configuration;
+        public BbsDbContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlServer(_configuration.GetConnectionString("LocalDb"));
 
         public DbSet<Note> Notes { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            =>options.UseSqlServer(LocalDb);
+        
 
     }
 }
