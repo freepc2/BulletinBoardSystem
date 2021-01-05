@@ -16,8 +16,7 @@ namespace Asp.NetCore.Mvc.Controllers
         private readonly NoteBll _noteBll;
         public NoteController(
             UserBll userBll,
-            NoteBll noteBll
-            )
+            NoteBll noteBll)
         {
             _userBll = userBll;
             _noteBll = noteBll;
@@ -33,10 +32,13 @@ namespace Asp.NetCore.Mvc.Controllers
 
             return View(model);
         }
+        
+        [HttpGet]   // 해당 index로 들어올 경우 시작됨
         public IActionResult Add()
         {
             return View();
         }
+        [HttpPost] // 해당 index에서 나갈때, 다른곳으로 이동시에 사용됨
         public IActionResult Add(Note model)
         {
             return View(model);

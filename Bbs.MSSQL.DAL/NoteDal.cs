@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bbs.MSSQL.DAL
 {
@@ -23,7 +24,8 @@ namespace Bbs.MSSQL.DAL
         {
             using (var db = new BbsDbContext())
             {
-                var note = db.Notes.ToList();
+                // DB에서 연동하고 List 출력
+                var note = db.Notes.Include(x => x.User).ToList();                
                 return note;
             }
         }
@@ -36,7 +38,6 @@ namespace Bbs.MSSQL.DAL
 
                 return (db.SaveChanges() > 0) ? true : false;
             }
-
         }
     }
 }
