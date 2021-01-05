@@ -1,10 +1,13 @@
 using Bbs.Bll;
 using Bbs.IDAL;
+using Bbs.Models;
 using Bbs.MSSQL.DAL;
 using Bbs.MSSQL.DAL.DataContext;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -49,6 +52,16 @@ namespace Asp.NetCore.Mvc6
             services.AddTransient<NoteBll>();
             services.AddTransient<INoteDal, NoteDal>();
 
+            // User Admin
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                options.LoginPath = "/Account/LogIn";
+                options.LogoutPath = "/Account/LogOut";
+                options.AccessDeniedPath = "/Home/Index";
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -78,6 +91,7 @@ namespace Asp.NetCore.Mvc6
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+               // endpoints.MapRazorPages();
             });
         }
     }

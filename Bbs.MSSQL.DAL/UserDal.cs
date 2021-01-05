@@ -53,5 +53,10 @@ namespace Bbs.MSSQL.DAL
         {
             throw new NotImplementedException();
         }
+
+        public User Getuset(string Name, string PasswordHashed)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
