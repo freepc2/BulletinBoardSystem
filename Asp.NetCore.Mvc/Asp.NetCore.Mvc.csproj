@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>aspnet-Asp.NetCore.Mvc-DA570607-0E88-49C3-89AF-0E57C4EFBCD6</UserSecretsId>
+    <UserSecretsId>aspnet-Asp.NetCore.Mvc-44420ECF-B5A1-4015-969E-EC9EA403F4B1</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,15 +10,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Bbs.Bll\Bbs.Bll.csproj" />
     <ProjectReference Include="..\Bbs.IDAL\Bbs.IDAL.csproj" />
+    <ProjectReference Include="..\Bbs.Models\Bbs.Models.csproj" />
     <ProjectReference Include="..\Bbs.MSSQL.DAL\Bbs.MSSQL.DAL.csproj" />
   </ItemGroup>
 

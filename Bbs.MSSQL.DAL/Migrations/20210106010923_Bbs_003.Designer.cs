@@ -4,14 +4,16 @@ using Bbs.MSSQL.DAL.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bbs.MSSQL.DAL.Migrations
 {
     [DbContext(typeof(BbsDbContext))]
-    partial class BbsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210106010923_Bbs_003")]
+    partial class Bbs_003
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
