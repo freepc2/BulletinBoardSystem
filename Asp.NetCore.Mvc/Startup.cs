@@ -36,8 +36,10 @@ namespace Asp.NetCore.Mvc
             //        Configuration.GetConnectionString("DefaultConnection")));
             //services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<BbsDbContext>();
+
+           // services.AddTransient<NoteBll>
             services.AddControllersWithViews();
         }
 
