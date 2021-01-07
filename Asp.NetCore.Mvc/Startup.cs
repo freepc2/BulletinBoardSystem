@@ -1,4 +1,8 @@
+using Asp.NetCore.Mvc.Search.Services;
+using Bbs.Bll;
+using Bbs.IDAL;
 using Bbs.Models;
+using Bbs.MSSQL.DAL;
 using Bbs.MSSQL.DAL.DataContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,7 +43,10 @@ namespace Asp.NetCore.Mvc
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<BbsDbContext>();
 
-           // services.AddTransient<NoteBll>
+            services.AddTransient<NoteBll>();
+            services.AddTransient<INoteDal, NoteDal>();
+            services.AddTransient<ISearchService, SearchService>();
+
             services.AddControllersWithViews();
         }
 

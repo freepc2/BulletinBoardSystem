@@ -29,10 +29,17 @@ namespace Bbs.Models
         [Required]
         public int Views { get; set; }
         /// <summary>
+        /// 게시판 삭제 유무 표시
+        /// </summary>
+        [Required]
+        public bool Available { get; set; } = true;
+        /// <summary>
         /// 게시판 작성자
         /// </summary>
         [Required]
         public int UserNo { get; set; }
+        [Required]
+        public DateTime Date { get; set; }
 
         [ForeignKey("UserNo")]
         public virtual User User { get; set; }

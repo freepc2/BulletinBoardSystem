@@ -1,6 +1,62 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using PagedList.Core
+@using PagedList.Core.Mvc
+@model Asp.NetCore.Mvc.Models.SearchViewModel
+
+<h3>게시판 목록</h3>
 @{
+    var hasResult = Model.SearchResult.SearchHits != null && Model.SearchResult.SearchHits.TotalItemCount > 0;
+    var query = string.Empty;
 }
-<h3>게시판 입니다</h3>
+<div>
+    <table class="table table-bordered">
+        <colgroup>
+            <col style="width: 100px;" />
+            <col style="width: 400px;" />
+            <col style="width: 50px;" />
+            <col style="width: 150px;" />
+            <col style="width: 70px;" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>조회수</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var note in Model.SearchResult.SearchHits)// Model은 리스트를 의미한다.
+            {
+                <tr>
+                    <td>@note.No</td>
+                    <td>
+                        <a asp-controller="Note" asp-action="Detail" asp-route-No="@note.No">@note.Title</a>
+                    </td>
+                    <td>@note.User.UserName</td>
+                    <td>@note.Date.ToString("yy-MM-dd")</td>
+                    <td>@note.Views</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <form class="form-horizontal" method="Search" asp-controller="Note" asp-action="Search" asp-route-query="@query">
+      <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+        <div class="form-group">
+            <label>검색</label>
+            <input type="text" class="form-control" asp-for="@query" placeholder="검색 목록"></input>
+            <span class="text-danger" asp-validation-for="@query"></span>
+        </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">검색</button>
+      </div>      
+    </form>              
+    <p><h6>Customized</h6><pager class="pager-container" list="@Model.SearchResult.SearchHits" options="@PagedListRenderOptions.Bootstrap4Full" asp-action="Index" asp-controller="Note" asp-route-query="@Model.SearchResult.SearchQuery" /></p>
+
+    <a class="btn btn-warning" asp-controller="Note" asp-action="Post" asp-route-Id="1">게시물 작성</a>
+</div>

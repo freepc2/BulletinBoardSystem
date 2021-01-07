@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bbs.IDAL\Bbs.IDAL.csproj" />
+    <ProjectReference Include="..\Bbs.MSSQL.DAL\Bbs.MSSQL.DAL.csproj" />
   </ItemGroup>
 
 </Project>
