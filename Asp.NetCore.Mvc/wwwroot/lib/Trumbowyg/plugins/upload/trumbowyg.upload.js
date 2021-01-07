@@ -15,7 +15,7 @@
     'use strict';
 
     var defaultOptions = {
-        serverPath: '',
+        serverPath: '/api/upload',
         fileFieldName: 'fileToUpload',
         data: [],                       // Additional data for ajax [{name: 'key', value: 'value'}]
         headers: {},                    // Additional headers

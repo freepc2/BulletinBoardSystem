@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Bbs.MSSQL.DAL\Bbs.MSSQL.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\image\upload\" />
+  </ItemGroup>
+
 </Project>

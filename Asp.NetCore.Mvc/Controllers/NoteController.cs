@@ -60,7 +60,6 @@ namespace Asp.NetCore.Mvc.Controllers
         [HttpPost]
         public IActionResult Post(Note model)
         {
-            
             if(ModelState.IsValid)
             {
                 model.UserNo = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -94,26 +93,8 @@ namespace Asp.NetCore.Mvc.Controllers
             }
             model.SearchResult.SearchQuery = query;
             return View(model);
-         //   return View();
         }
-        //[HttpPost]
-        //public IActionResult Search(string query, int? page)
-        //{
-        //    var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-        //    var pagSize = 10;
-        //    var model = new SearchViewModel();
-        //    if (string.IsNullOrWhiteSpace(query))
-        //    {
-        //        model.SearchResult = new SearchResult();
-        //    }
-        //    else
-        //    {
-        //        var notes = _noteBll.GetNoteList();
-        //        model.SearchResult = _searchService.GetSearchResult(notes, query, pageNumber, pagSize);
-        //    }
-        //    model.SearchResult.SearchQuery = query;
-        //    return View(model);
-        //}
+
         #region Helpers
         #endregion
     }
