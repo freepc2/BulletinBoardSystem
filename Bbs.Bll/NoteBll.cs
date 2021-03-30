@@ -35,6 +35,11 @@ namespace Bbs.Bll
             if (ListNo < 0) throw new NotImplementedException();
             return _noteDal.GetNoteList(ListNo);
         }
+        public List<Note> GetNoteList(int ListNo, int count)
+        {
+            if (ListNo < 0) throw new NotImplementedException();
+            return _noteDal.GetNoteList(ListNo, count);
+        }
         public bool PostNote(Note note)
         {
             if (note == null) throw new ArgumentException();

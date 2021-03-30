@@ -1,0 +1,46 @@
+﻿@model Note
+@{
+    ViewBag.Title = "글 수정하기";
+    ViewBag.Writer = "";
+}
+
+<h3>@ViewBag.Title</h3>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.No)
+    @Html.HiddenFor(model => model.UserNo)
+    @Html.HiddenFor(model => model.Views)
+    @Html.HiddenFor(model => model.Date)
+
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <form class="form-horizontal" method="post" asp-controller="Note" asp-action="Edit">
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+                <div class="form-group">
+                    <label>제목</label>
+                    <input type="text" class="form-control" asp-for="Title" placeholder="제목 입력"></input>
+                    <span class="text-danger" asp-validation-for="Title"></span>
+                </div>
+
+                <div class="form-group center">
+                    <textarea class="form-control editor" rows="20" asp-for="Contents" placeholder="내용 입력"></textarea>
+                    <span class="text-danger" asp-validation-for="Contents"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">수정</button>
+                    <a type="btn btn-default" asp-controller="Note" asp-action="Index">취소</a>
+                </div>
+                <div>
+                    <label>작성자 : </label>@Model.User.LastName @Model.User.FirstName
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+<div class="col-lg-2"></div>
+

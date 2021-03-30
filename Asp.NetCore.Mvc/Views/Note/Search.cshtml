@@ -4,8 +4,6 @@
 
 @{
     ViewData["Title"] = "Search Page";
-}
-@{
     var hasResult = Model.SearchResult.SearchHits != null && Model.SearchResult.SearchHits.TotalItemCount > 0;
 }
 <div class="text-center">

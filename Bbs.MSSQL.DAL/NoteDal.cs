@@ -30,7 +30,10 @@ namespace Bbs.MSSQL.DAL
         {
             using (var db = new BbsDbContext(_configuration))
             {
-                var note = db.Notes.FirstOrDefault(x => x.No == No);
+                var note = db.Notes
+                    .Include(x=>x.User)
+                    .FirstOrDefault(x => x.No == No);
+
                 note.Views++;
                 db.Notes.Update(note);
                 return db.SaveChanges()>0 ? note: null;
@@ -57,6 +60,22 @@ namespace Bbs.MSSQL.DAL
                     .OrderByDescending(n => n.No)
                     .Skip(ListNo * 10)
                     .Take(10)
+                    .ToList();
+            }
+        }
+
+        public List<Note> GetNoteList(int ListNo, int count)
+        {
+            using (var db = new BbsDbContext(_configuration))
+            {
+              //  var value = db.Notes.FromSqlRaw("SELECT * FROM NOTES N WHERE N.AVAILABLE IS TRUE ORDER BY N.NO DESC LIMIT {0} OFFSET {1}", ListNo, count*ListNo).ToList();
+              //  return value.ToList();
+                // DB에서 연동하고 List 출력
+                return db.Notes.Include(x => x.User)
+                    .Where(x => x.Available == true)
+                    .OrderByDescending(n => n.No)
+                    .Skip(ListNo * count)
+                    .Take(count)
                     .ToList();
             }
         }

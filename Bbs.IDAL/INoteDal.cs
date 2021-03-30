@@ -36,6 +36,13 @@ namespace Bbs.IDAL
         /// </summary>
         /// <param name="note"></param>
         /// <returns></returns>
+        /// 
+        List<Note> GetNoteList(int ListNo, int count);
+        /// <summary>
+        /// 게시판 게시
+        /// </summary>
+        /// <param name="note"></param>
+        /// <returns></returns>
         bool PostNote(Note note);
         /// <summary>
         /// 게시판 내용 업데이트

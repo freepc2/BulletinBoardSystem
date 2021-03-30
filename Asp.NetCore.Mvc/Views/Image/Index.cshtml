@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var fileModel = new FileBufferModel();
+}
+
+<style>
+    img {
+        width: 300px;
+        height: 300px;
+        display: block;
+        margin: 0px 0px 10px 10px;
+        object-fit: cover;
+    }
+</style>
+<form enctype="multipart/form-data" method="post">
+    <dl>
+        <dt>
+            <label asp-for="@fileModel.FormFile"></label>
+        </dt>
+        <dd>
+            <input asp-for="@fileModel.FormFile" type="file" />
+            <span asp-vaildation-for="@fileModel.FormFile"></span>
+        </dd>
+    </dl>
+    <input class="btn" type="submit" value="Upload" asp-controller="Image" asp-action="Upload" asp-route-fileModel="@fileModel" />
+</form>
+@foreach (var image in Model)
+{
+    <img src="@image" width="100" style="float:left">
+}

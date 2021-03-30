@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/Trumbowyg/ui/trumbowyg.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-
+@*    <script language='javascript'>
+        window.setTimeout('window.location.reload()', 1000); // 60초마다 새로고침
+    </script>*@
 </head>
 <body>
     <header>
@@ -27,6 +29,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Note" asp-action="Index">게시판</a>
                         </li>
+
+                        @*사진 메뉴 추가*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Image" asp-action="Index">사진</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
@@ -34,17 +41,22 @@
                     <partial name="_LoginPartial" />
                 </div>
             </div>
+            <div>
+                현재 시간 :
+                @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+            </div>
         </nav>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @* 중복되지 않는 코드들 *@
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - Asp.NetCore.Mvc - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - Asp.NetCore.Mvc TEST 페이지 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 

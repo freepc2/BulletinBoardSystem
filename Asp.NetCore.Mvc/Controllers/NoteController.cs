@@ -45,6 +45,7 @@ namespace Asp.NetCore.Mvc.Controllers
             var pagSize = 10;
 
             var notes = _noteBll.GetNoteList();
+            var nots = _noteBll.GetNoteList(pageNumber, pagSize);
             var model = new SearchViewModel();
             model.SearchResult = _searchService.GetResult(notes, pageNumber, pagSize);
 
@@ -92,6 +93,39 @@ namespace Asp.NetCore.Mvc.Controllers
                 model.SearchResult = _searchService.GetSearchResult(notes, query, pageNumber, pagSize);
             }
             model.SearchResult.SearchQuery = query;
+            return View(model);
+        }
+        [HttpGet]
+        public IActionResult Edit(int No)
+        {
+            
+            var note = _noteBll.GetNoteAndUpdateView(No);
+            // 같은 내용인지 확인
+            if(note.UserNo == Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+            {
+                return View(note);
+            }
+            else
+                return RedirectToAction("Index", "Note");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Note model)
+        {
+
+
+            // model의 번호가 없음... -> 업데이트되지 않고 신규 목록으로 추가됨
+            // 기존 model을 받아오는 방식을 구현해야 함
+            if(model.UserNo == Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+            {
+                if (ModelState.IsValid)
+                {
+                   // model.UserNo = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    _noteBll.UpdateNote(model);
+                    return RedirectToAction("Index", "Note");
+                }
+            }
+            ModelState.AddModelError(string.Empty,"작성자가 아닙니다.");
             return View(model);
         }
 

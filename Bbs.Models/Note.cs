@@ -38,7 +38,7 @@ namespace Bbs.Models
         /// </summary>
         [Required]
         public int UserNo { get; set; }
-        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Date { get; set; }
 
         [ForeignKey("UserNo")]

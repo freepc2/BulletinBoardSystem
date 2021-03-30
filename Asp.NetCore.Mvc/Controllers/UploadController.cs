@@ -28,7 +28,7 @@ namespace Asp.NetCore.Mvc.Controllers
              * File 이름 변경
              */
             // Path = wwwroot/image/upload
-            var path = Path.Combine(_environment.WebRootPath, @"image\upload\");
+            var path = Path.Combine(_environment.WebRootPath, @"image\note\");
             var fileFullName = fileToUpload.FileName.Split('.');
             var fileName = $"{Guid.NewGuid()}_{Guid.NewGuid()}.{fileFullName[1]}";
             // 파일 저장
@@ -37,7 +37,7 @@ namespace Asp.NetCore.Mvc.Controllers
                 await fileToUpload.CopyToAsync(fileStream);
             }
             // 저장된 파일 위치 및 이름 전송
-            return Ok(new { file = "/image/upload/" + fileName, success = true });
+            return Ok(new { file = "/image/note/" + fileName, success = true });
         }
     }
 }
